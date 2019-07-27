@@ -54,40 +54,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'BCA Scraper' });
 });
 
-router.get('/test/:dateinput', async function(req, res, next) {
-  try {
-    const filteredByDate = await db.kurs.findAll({
-      attributes : ['date'],
-      where : {
-        date : req.params.dateinput
-      }
-    }
-    );
-    if (filteredByDate.length !== 0) {
-      res.json({
-        'status': 'OK',
-        'messages': '',
-        'data': filteredByDate
-      })
-    } else {
-      res.json({
-        'status': 'ERROR',
-        'messages': 'EMPTY',
-      })
-    }
-  } catch (err) {
-    console.log(err)
-    res.json({
-      'status': 'ERROR',
-      'messages': err.messages,
-      'data': {}
-    })
-  }
-}); // for testing purpose
-
 router.get('/api/indexing', async function(req, res, next){
   await scrapeData()
-  
   const filteredByDate = await db.kurs.findAll({
     attributes : ['date'],
     where : {
@@ -116,11 +84,7 @@ router.get('/api/indexing', async function(req, res, next){
     res.json({"message":"Scraped data already stored",
   exchangeRateList})
   }
-
-  
 }) //1
-
-// sequelize model:create --name kurs --attributes currency:string,eRateBuy:string,eRateSell:string,ttCounterBuy:string,ttCounterSell:string,date:string
 
 router.delete('/api/kurs/:date', async function(req, res, next){
   // const date = req.params.date;
@@ -183,7 +147,6 @@ router.get('/api/kurs/:symbol', async function(req, res, next){
   const startdate = req.query.startdate;
   const enddate = req.query.enddate;
 
-  // res.json({symbol, startdate, enddate});
   try {
     const filteredByDate = await db.kurs.findAll({
       where: {
