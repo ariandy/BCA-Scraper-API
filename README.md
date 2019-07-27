@@ -8,5 +8,5 @@
   <img src="https://img.shields.io/badge/Unit%20Test-Not%20yet-red">
 </a>
 
-# BCA-Scraper
+# BCA-Scraper-API
 Build by ExpressJs, Cheerio, and Sequelize
